@@ -53,7 +53,10 @@ A tool to build a syscall whitelist based on an example valid submission, to the
 
 This should create a file called "syscalls.txt", containing all the syscall numbers used in the pristine code.
 
-3. Run ```build/RunSubmission```
+3. Run:
+   ```
+   build/RunSubmission
+    ```
 
 
 ## Local Execution Container
