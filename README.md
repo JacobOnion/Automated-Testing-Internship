@@ -22,11 +22,38 @@ To push to the Dockerhub Repository:
 2. Set up a repository
 
 3. Run these commands:
+'''
 * podman login docker.io -u 'username'
 * podman tag autograder:latest docker.io/'username'/'repository name':latest
 * podman push docker.io/'username'/'repository name':latest
+'''
 
 4. In Gradescope, when setting the autograder, select manual docker configuration and write 'username'/'repository name':latest
+
+
+## Syscall filter builder
+
+A tool to build a syscall whitelist based on an example valid submission, to then use on any student submissions. Can be run locally outside of a container.
+
+### Dependencies
+
+
+### Setup and execution
+
+1. Add the example submission to the "Pristine" directory
+
+2. Run these Commands:
+"""
+* ./premake5 gmake
+* make
+* build/RunPristine
+"""
+
+This should create a file called "syscalls.txt", containing all the syscall numbers used in the pristine code.
+
+3. Run """build/RunSubmission"""
+
+
 
 ## Help
 
