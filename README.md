@@ -31,7 +31,7 @@ To push to the Dockerhub Repository:
 4. In Gradescope, when setting the autograder, select manual docker configuration and write 'username'/'repository name':latest
 
 
-## Syscall filter builder
+## Syscall filter Constructor
 
 A tool to build a syscall whitelist based on an example valid submission, to then use on any student submissions. Can be run locally outside of a container.
 
@@ -43,16 +43,32 @@ A tool to build a syscall whitelist based on an example valid submission, to the
 1. Add the example submission to the "Pristine" directory
 
 2. Run these Commands:
-"""
+'''
 * ./premake5 gmake
 * make
 * build/RunPristine
-"""
+'''
 
 This should create a file called "syscalls.txt", containing all the syscall numbers used in the pristine code.
 
-3. Run """build/RunSubmission"""
+3. Run '''build/RunSubmission'''
 
+
+## Local Execution Container
+
+A local podman container that can be used to run suspicious code safely. Makes use of a ptrace harness and seccomp filter to prevent code escaping the container.
+
+### Dependencies
+
+Requires podman to be available to run the container.
+
+### Setup and execution
+
+1. Add the student code to the ___ directory
+
+2. Run these commands:
+podman build -t container:latest .
+podman run container:latest
 
 
 ## Help
@@ -61,10 +77,6 @@ Any advise for common problems or issues.
 ```
 command to run if program contains helper info
 ```
-
-## License
-
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
 
 ## Acknowledgments
 
