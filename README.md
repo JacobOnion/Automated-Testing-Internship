@@ -1,30 +1,32 @@
-# Project Title
+# Automated Testing Projects
 
-Simple overview of use/purpose.
+3 tools focused on improving security when grading student code.
 
-## Description
+## Graphics-Autograder
 
-An in-depth paragraph about your project and overview of use.
-
-## Getting Started
+A low-level autograder than can be used in place of any currently used autograder in Gradescope.
 
 ### Dependencies
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
+Requires podman to be available for local testing and pushing to repository.
 
-### Installing
+### Setup and execution
 
-* How/where to download your program
-* Any modifications needed to be made to files/folders
+To build and run locally:
+podman build -t autograder:latest .
+podman run autograder:latest
 
-### Executing program
+To push to the Dockerhub Repository:
+1. make an account on Dockerhub
 
-* How to run the program
-* Step-by-step bullets
-```
-code blocks for commands
-```
+2. Set up a repository
+
+3. Run these commands:
+* podman login docker.io -u 'username'
+* podman tag autograder:latest docker.io/'username'/'repository name':latest
+* podman push docker.io/'username'/'repository name':latest
+
+4. In Gradescope, when setting the autograder, select manual docker configuration and write 'username'/'repository name':latest
 
 ## Help
 
@@ -32,21 +34,6 @@ Any advise for common problems or issues.
 ```
 command to run if program contains helper info
 ```
-
-## Authors
-
-Contributors names and contact info
-
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
-
-## Version History
-
-* 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
-* 0.1
-    * Initial Release
 
 ## License
 
