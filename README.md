@@ -72,7 +72,7 @@ Requires podman to be available to run the container.
 1. Add the student code to the ___ directory
 
 2. Run these commands:
-3. ```
+```
 podman build -t container:latest .
 podman run container:latest
 ```
