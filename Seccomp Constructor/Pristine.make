@@ -30,7 +30,7 @@ endif
 RESCOMP = windres
 TARGETDIR = build
 TARGET = $(TARGETDIR)/Pristine
-INCLUDES += -IOpenGL -IOpenGL/glad/include
+INCLUDES += -IPristine -IPristine/glad/include
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
@@ -137,10 +137,10 @@ endif
 # File Rules
 # #############################################
 
-$(OBJDIR)/gl.o: OpenGL/glad/src/gl.c
+$(OBJDIR)/gl.o: Pristine/glad/src/gl.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/main.o: OpenGL/main.cpp
+$(OBJDIR)/main.o: Pristine/main.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

@@ -17,9 +17,9 @@ project "ScreenGrab"
     language "C++"
     targetdir "build"
 
-    files {"OpenGL/ScreenGrabLib.cpp"}
+    files {"Pristine/ScreenGrabLib.cpp"}
 
-    includedirs {"OpenGL"}
+    includedirs {"Pristine"}
 
     links {"glfw", "dl"}
 
@@ -31,7 +31,7 @@ project "RunPristine"
 
     files {"run_pristine.c"}
 
-    includedirs "OpenGL"
+    includedirs "Pristine"
 
     links {"seccomp"}
 
@@ -43,7 +43,7 @@ project "RunSubmission"
 
     files {"run_submission.c"}
 
-    includedirs "OpenGL"
+    includedirs "Submission"
 
     links {"seccomp"}
 
@@ -53,8 +53,21 @@ project "Pristine"
     language "C++"
     targetdir "build"
 
-    files {"OpenGL/main.cpp", "OpenGL/glad/src/gl.c"}
+    files {"Pristine/main.cpp", "Pristine/glad/src/gl.c"}
 
-    includedirs {"OpenGL", "OpenGL/glad/include"}
+    includedirs {"Pristine", "Pristine/glad/include"}
 
     links {"glfw"}
+
+
+project "Submission"
+    kind "ConsoleApp"
+    language "C++"
+    targetdir "build"
+
+    files {"Submission/main.cpp", "Submission/glad/src/gl.c"}
+
+    includedirs {"Submission", "Submission/glad/include"}
+
+    links {"glfw"}
+

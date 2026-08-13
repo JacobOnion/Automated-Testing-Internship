@@ -82,7 +82,7 @@ void setup_base_filter(void)
 }
 
 int setup_whitelist() {
-    scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_KILL_PROCESS);
+    scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_TRAP);
     if (ctx == NULL)
         return -1;
 
@@ -143,26 +143,6 @@ void display_paths() { // TODO: start checking for WRITES SPECIFICALLY (why woul
         }
     }
 
-    //printf("\n SYSCALL NUMBERS\n\n");
-
-    /*FILE* syscallFile = fopen("syscalls.txt", "a");
-    for (int i = 0; i < syscallCount; i++) {
-        long syscall = syscalls[i];
-        fprintf(syscallFile, "%ld\n", syscall);
-        //if (strstr(path, "/root")) {
-        //printf("SYSCALL NUM: %ld\n", syscall);
-        
-        const char *name = seccomp_syscall_resolve_num_arch(
-            SCMP_ARCH_X86_64,
-            syscall
-        );
-
-        printf("%s\n", name);
-
-    }
-    fclose(syscallFile);
-    printf("\n TOTAL UNIQUE SYSCALLS: %d\n\n", syscallCount);
-    */
 }
 
 
@@ -199,11 +179,6 @@ int remove_process(pid_t pid)
     for (int i = 0; i < processCount; i++) {
         if (processes[i] == pid) {
             processes[i] = processes[--processCount];
-            
-            //fprintf(stderr, "Removing process %d, processNum is %d\n", pid, processCount);
-            
-            //if (processCount == 1)
-            //    printf("\n\nTRACING FINISHED\n\n");
             return 0;
         }
     }
@@ -217,34 +192,20 @@ int main() {
         setvbuf(stdout, NULL, _IONBF, 0);
         ptrace(PTRACE_TRACEME, 0, NULL, NULL);
         raise(SIGSTOP);
-
-        //setenv("LD_PRELOAD", "/LocalCont/source/build/autograder/libScreenGrab.so", 1);
-        //char *argv[] = {"xvfb-run", "/LocalCont/source/build/autograder/OpenGLProject", NULL};
-             //"/autograder/submission/OpenGL/build/OpenGLProject", NULL};
-        
-        /*struct passwd *pw = getpwnam("student");
-        setgid(pw->pw_gid);
-
-        setuid(pw->pw_uid);
-        */
-        
+ 
         setup_base_filter();
         
         setup_whitelist();
 
-        //int result = execvp("xvfb-run", argv);
-             int result = execl("build/Pristine", "Pristine", NULL);
-        //int result = execl("/autograder/source/build/autograder/BasicFile", "BasicFile", NULL);
-        //raise(SIGSTOP);
+             int result = execl("build/Submission", "Submission", NULL);
+
         _exit(result);
     }
 
     else {
         processes [processCount++] = child;
         int status;
-        //fprintf(stderr, "before waitpid\n");
         waitpid(child, &status, 0);
-        //fprintf(stderr, "after waitpid\n");
 
 
         //Enable syscall tracing
@@ -256,7 +217,6 @@ int main() {
         
         
         ptrace(PTRACE_SYSCALL, child, 0, 0);
-        //fprintf(stderr, "after ptrace\n");
         int entering = 1;  // Only run syscall tracing on entry, not exit
 
         while (1) {
@@ -271,11 +231,6 @@ int main() {
 
             if (WIFEXITED(status)) {
                 int code = WEXITSTATUS(status);
-                /*if (code == 0)
-                    fprintf(stderr, "PASS: Process exited with code %d\n", code);
-                else
-                    fprintf(stderr, "FAIL: Process exited with code %d\n", code);
-                */
                 if (remove_process(pid) == 1)
                     return 1;
                 if (processCount <= 0)
@@ -296,7 +251,6 @@ int main() {
             
             if (WIFSTOPPED(status)) {
                 int sig = WSTOPSIG(status);
-                //fprintf(stderr, "WIFSTOPPED PROCCED: SIG IS %d\n", sig);
                 
                 // Syscall handling
                 if (sig == SIGTRAP) {
@@ -324,16 +278,9 @@ int main() {
 
                         unsigned long new_pid;
                         ptrace(PTRACE_GETEVENTMSG, pid, 0, &new_pid);
-                        
-                        
-                        //fprintf(stderr, "NEW PROCESS: %lu\n", new_pid);
-                    
+                                            
                         processes[processCount++] = new_pid;
-                        
-
-                        //fprintf(stderr, "Adding process %lu, processNum is %d\n", new_pid, processCount);
-                        
-
+                                                
                         ptrace(PTRACE_SYSCALL, new_pid, 0, 0);
                     }
 
@@ -343,8 +290,28 @@ int main() {
                 }
 
 
+                // ILLEGAL SYSCALL
+                if (sig == SIGSYS) {
+                    struct user_regs_struct regs;
+                    ptrace(PTRACE_GETREGS, pid, NULL, &regs);
+
+                    fprintf(stderr, "Seccomp violation: syscall %lld\n", regs.orig_rax);
+                    
+                    for (int i = 0; i < processCount; i++)
+                    {
+                        kill(processes[i], SIGKILL);
+                    }
+                    processCount = 0;
+
+
+                    //ptrace(PTRACE_CONT, pid, NULL, 0);
+                }
+
+
+
+
+
                 if (sig == (SIGTRAP | 0x80)) {
-                    //fprintf(stderr, "entering SIGTRAP\n");
                     struct user_regs_struct regs;
                     ptrace(PTRACE_GETREGS, pid, NULL, &regs);
                     long syscall_num = regs.orig_rax;
@@ -366,24 +333,9 @@ int main() {
 
 
                     if (syscall_num == SYS_openat || syscall_num == SYS_open) {  // ADD BACK OPEN
-                        //fprintf(stderr, "SYSCALL: open/openat() detected: %lu\n", regs.rip);
                         char path[4096];
                         
                         read_child(pid, regs.rsi, path, sizeof(path));
-                        //path[4095] = '\0';
-                        //pathArray[pathCount++] = strdup(path);
-                        
-                        /*char *copy = malloc(strlen(path) + 1);
-                        strcpy(copy, path);
-                        pathArray[pathCount++] = copy;
-                        */
-                        /*
-                        if (pathCount >= 1024) {
-                            fprintf(stderr, "pathArray overflow\n");
-                            kill(pid, SIGKILL);
-                            return 1;
-                        }
-                        */
                         char *copy = malloc(strlen(path) + 1);
                         if (!copy) {
                             perror("malloc");
@@ -392,8 +344,6 @@ int main() {
                         }
 
                         strcpy(copy, path);
-                        //pathArray[pathCount++] = copy;
-                        
 
                         if (pathCount == capacity) {
                             capacity = (capacity == 0) ? 16 : capacity * 2;
@@ -408,14 +358,6 @@ int main() {
                         
                         }
                         pathArray[pathCount++] = copy;
-
-
-                        //fprintf(stderr, "SYSCALL: open/openat() path: %s\n", path);
-                    
-                        /*if (strcmp(path, "/autograder/source/tests/fail_dir/bad.txt") == 0) {
-                            fprintf(stderr, "ERROR: ACCESSING INVALID DIRECTORY\n");
-                            kill(pid, SIGKILL);
-                        }*/
 
                         if (strstr(path, "/tests")) {
                             fprintf(stderr, "ERROR: /tests accessed\n\n\n");
@@ -442,31 +384,11 @@ int main() {
                         }
                     
                     }
-                        
-                        // OpenGL uses sockets anyway, so how do I check if they are dangerous?
-                        /*if (syscall_num == SYS_socket 
-                            && (regs.rdi == AF_INET
-                            || regs.rdi == AF_INET6)) {
-                            printf("\nERROR: network socket detected\n\n");
-                            kill(pid, SIGKILL);
-                            return 1;
-                        }*/
-
-                        /*if (syscall_num == SYS_inotify_add_watch) {
-                            printf("\nERROR: inotify event detected\n\n");
-                            kill(pid, SIGKILL);
-                            return 1;
-                        }*/
-                        
                         if (syscall_num == SYS_ptrace) {
                             printf("\nERROR: ptrace tampering detected\n\n");
                             kill(pid, SIGKILL);
                             return 1;
                         }
-
-                        
-
-                    //}
                     skip:;
                     //entering = !entering;
                     ptrace(PTRACE_SYSCALL, pid, 0, 0);

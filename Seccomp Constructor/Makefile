@@ -13,18 +13,20 @@ ifeq ($(config),debug)
   RunPristine_config = debug
   RunSubmission_config = debug
   ScreenGrab_config = debug
+  Submission_config = debug
 
 else ifeq ($(config),release)
   Pristine_config = release
   RunPristine_config = release
   RunSubmission_config = release
   ScreenGrab_config = release
+  Submission_config = release
 
 else
   $(error "invalid configuration $(config)")
 endif
 
-PROJECTS := ScreenGrab RunPristine RunSubmission Pristine
+PROJECTS := ScreenGrab RunPristine RunSubmission Pristine Submission
 
 .PHONY: all clean help $(PROJECTS) 
 
@@ -54,11 +56,18 @@ ifneq (,$(ScreenGrab_config))
 	@${MAKE} --no-print-directory -C . -f ScreenGrab.make config=$(ScreenGrab_config)
 endif
 
+Submission:
+ifneq (,$(Submission_config))
+	@echo "==== Building Submission ($(Submission_config)) ===="
+	@${MAKE} --no-print-directory -C . -f Submission.make config=$(Submission_config)
+endif
+
 clean:
 	@${MAKE} --no-print-directory -C . -f Pristine.make clean
 	@${MAKE} --no-print-directory -C . -f RunPristine.make clean
 	@${MAKE} --no-print-directory -C . -f RunSubmission.make clean
 	@${MAKE} --no-print-directory -C . -f ScreenGrab.make clean
+	@${MAKE} --no-print-directory -C . -f Submission.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -74,5 +83,6 @@ help:
 	@echo "   RunPristine"
 	@echo "   RunSubmission"
 	@echo "   ScreenGrab"
+	@echo "   Submission"
 	@echo ""
 	@echo "For more information, see https://github.com/premake/premake-core/wiki"

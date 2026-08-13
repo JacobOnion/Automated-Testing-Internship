@@ -29,14 +29,14 @@ ifeq ($(origin AR), default)
 endif
 RESCOMP = windres
 TARGETDIR = build
-TARGET = $(TARGETDIR)/RunSubmission
-INCLUDES += -ISubmission
+TARGET = $(TARGETDIR)/Submission
+INCLUDES += -ISubmission -ISubmission/glad/include
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-LIBS += -lseccomp
+LIBS += -lglfw
 LDDEPS +=
-LINKCMD = $(CC) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
+LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
 define PREBUILDCMDS
 endef
 define PRELINKCMDS
@@ -45,14 +45,14 @@ define POSTBUILDCMDS
 endef
 
 ifeq ($(config),debug)
-OBJDIR = obj/Debug/RunSubmission
+OBJDIR = obj/Debug/Submission
 DEFINES += -DDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g
 ALL_LDFLAGS += $(LDFLAGS)
 
 else ifeq ($(config),release)
-OBJDIR = obj/Release/RunSubmission
+OBJDIR = obj/Release/Submission
 DEFINES += -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -O2
@@ -70,8 +70,10 @@ endif
 GENERATED :=
 OBJECTS :=
 
-GENERATED += $(OBJDIR)/run_submission.o
-OBJECTS += $(OBJDIR)/run_submission.o
+GENERATED += $(OBJDIR)/gl.o
+GENERATED += $(OBJDIR)/main.o
+OBJECTS += $(OBJDIR)/gl.o
+OBJECTS += $(OBJDIR)/main.o
 
 # Rules
 # #############################################
@@ -81,7 +83,7 @@ all: $(TARGET)
 
 $(TARGET): $(GENERATED) $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
 	$(PRELINKCMDS)
-	@echo Linking RunSubmission
+	@echo Linking Submission
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -102,7 +104,7 @@ else
 endif
 
 clean:
-	@echo Cleaning RunSubmission
+	@echo Cleaning Submission
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(GENERATED)
@@ -120,7 +122,7 @@ ifneq (,$(PCH))
 $(OBJECTS): $(GCH) | $(PCH_PLACEHOLDER)
 $(GCH): $(PCH) | prebuild
 	@echo $(notdir $<)
-	$(SILENT) $(CC) -x c-header $(ALL_CFLAGS) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
+	$(SILENT) $(CXX) -x c++-header $(ALL_CXXFLAGS) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
 $(PCH_PLACEHOLDER): $(GCH) | $(OBJDIR)
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) touch "$@"
@@ -135,9 +137,12 @@ endif
 # File Rules
 # #############################################
 
-$(OBJDIR)/run_submission.o: run_submission.c
+$(OBJDIR)/gl.o: Submission/glad/src/gl.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/main.o: Submission/main.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 
 -include $(OBJECTS:%.o=%.d)
 ifneq (,$(PCH))

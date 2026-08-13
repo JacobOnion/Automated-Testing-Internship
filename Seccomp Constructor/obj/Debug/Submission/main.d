@@ -1,5 +1,6 @@
-obj/Debug/Pristine/main.o: Pristine/main.cpp /usr/include/stdc-predef.h \
- Pristine/glad/include/glad/gl.h Pristine/glad/include/KHR/khrplatform.h \
+obj/Debug/Submission/main.o: Submission/main.cpp \
+ /usr/include/stdc-predef.h Submission/glad/include/glad/gl.h \
+ Submission/glad/include/KHR/khrplatform.h \
  /usr/lib/gcc/x86_64-redhat-linux/11/include/stdint.h \
  /usr/include/stdint.h /usr/include/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -142,7 +143,7 @@ obj/Debug/Pristine/main.o: Pristine/main.cpp /usr/include/stdc-predef.h \
  /usr/include/bits/socket_type.h /usr/include/bits/sockaddr.h \
  /usr/include/asm/socket.h /usr/include/asm-generic/socket.h \
  /usr/include/asm/sockios.h /usr/include/asm-generic/sockios.h \
- /usr/include/bits/types/struct_osockaddr.h Pristine/stb_image_write.h \
+ /usr/include/bits/types/struct_osockaddr.h Submission/stb_image_write.h \
  /usr/include/c++/11/stdlib.h /usr/include/string.h \
  /usr/include/strings.h /usr/include/c++/11/math.h \
  /usr/include/c++/11/cmath /usr/include/math.h \
@@ -165,8 +166,8 @@ obj/Debug/Pristine/main.o: Pristine/main.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/11/tr1/poly_laguerre.tcc \
  /usr/include/c++/11/tr1/riemann_zeta.tcc /usr/include/assert.h
 /usr/include/stdc-predef.h:
-Pristine/glad/include/glad/gl.h:
-Pristine/glad/include/KHR/khrplatform.h:
+Submission/glad/include/glad/gl.h:
+Submission/glad/include/KHR/khrplatform.h:
 /usr/lib/gcc/x86_64-redhat-linux/11/include/stdint.h:
 /usr/include/stdint.h:
 /usr/include/bits/libc-header-start.h:
@@ -380,7 +381,7 @@ Pristine/glad/include/KHR/khrplatform.h:
 /usr/include/asm/sockios.h:
 /usr/include/asm-generic/sockios.h:
 /usr/include/bits/types/struct_osockaddr.h:
-Pristine/stb_image_write.h:
+Submission/stb_image_write.h:
 /usr/include/c++/11/stdlib.h:
 /usr/include/string.h:
 /usr/include/strings.h:

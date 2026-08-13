@@ -30,7 +30,7 @@ endif
 RESCOMP = windres
 TARGETDIR = build
 TARGET = $(TARGETDIR)/libScreenGrab.so
-INCLUDES += -IOpenGL
+INCLUDES += -IPristine
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
@@ -135,7 +135,7 @@ endif
 # File Rules
 # #############################################
 
-$(OBJDIR)/ScreenGrabLib.o: OpenGL/ScreenGrabLib.cpp
+$(OBJDIR)/ScreenGrabLib.o: Pristine/ScreenGrabLib.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

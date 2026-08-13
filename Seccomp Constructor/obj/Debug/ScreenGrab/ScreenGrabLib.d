@@ -1,4 +1,4 @@
-obj/Debug/ScreenGrab/ScreenGrabLib.o: OpenGL/ScreenGrabLib.cpp \
+obj/Debug/ScreenGrab/ScreenGrabLib.o: Pristine/ScreenGrabLib.cpp \
  /usr/include/stdc-predef.h /usr/include/GLFW/glfw3.h \
  /usr/lib/gcc/x86_64-redhat-linux/11/include/stddef.h \
  /usr/lib/gcc/x86_64-redhat-linux/11/include/stdint.h \
@@ -55,7 +55,7 @@ obj/Debug/ScreenGrab/ScreenGrabLib.o: OpenGL/ScreenGrabLib.cpp \
  /usr/include/c++/11/bits/functional_hash.h \
  /usr/include/c++/11/bits/hash_bytes.h \
  /usr/include/c++/11/bits/range_access.h \
- /usr/include/c++/11/bits/vector.tcc OpenGL/stb_image_write.h \
+ /usr/include/c++/11/bits/vector.tcc Pristine/stb_image_write.h \
  /usr/include/c++/11/stdlib.h /usr/include/c++/11/cstdlib \
  /usr/include/stdlib.h /usr/include/bits/waitflags.h \
  /usr/include/bits/waitstatus.h /usr/include/bits/types/locale_t.h \
@@ -171,7 +171,7 @@ obj/Debug/ScreenGrab/ScreenGrabLib.o: OpenGL/ScreenGrabLib.cpp \
 /usr/include/c++/11/bits/hash_bytes.h:
 /usr/include/c++/11/bits/range_access.h:
 /usr/include/c++/11/bits/vector.tcc:
-OpenGL/stb_image_write.h:
+Pristine/stb_image_write.h:
 /usr/include/c++/11/stdlib.h:
 /usr/include/c++/11/cstdlib:
 /usr/include/stdlib.h:
