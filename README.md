@@ -69,7 +69,8 @@ Requires podman to be available to run the container.
 
 ### Setup and execution
 
-1. Add the student code to the ___ directory
+1. Replace the contents of the OpenGL directory with the student code.
+   Ensure glad, ScreenGrabLib.cpp and stb_image_write.h exist and the directory root.
 
 2. Run these commands:
 ```
