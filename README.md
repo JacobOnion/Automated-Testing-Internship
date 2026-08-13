@@ -8,7 +8,7 @@ A low-level autograder than can be used in place of any currently used autograde
 
 ### Dependencies
 
-Requires podman to be available for local testing and pushing to repository.
+Requires podman to be available for local testing and pushing autograder changes to repository.
 
 ### Setup and execution
 
@@ -37,23 +37,23 @@ To push to the Dockerhub Repository:
 
 A tool to build a syscall whitelist based on an example valid submission, to then use on any student submissions. Can be run locally outside of a container.
 
-### Dependencies
-
-
 ### Setup and execution
 
-1. Add the example submission to the "Pristine" directory
+1. Add the example submission to the "Pristine" directory and student code to the "Submission" directory
 
-2. Run these Commands:
+2. build the executables:
 ```
-* ./premake5 gmake
-* make
-* build/RunPristine
+./build_project.sh
+```
+
+3.  Run:
+```
+build/RunPristine
 ```
 
 This should create a file called "syscalls.txt", containing all the syscall numbers used in the pristine code.
 
-3. Run:
+4. Run:
    ```
    build/RunSubmission
     ```
@@ -86,11 +86,8 @@ Any advise for common problems or issues.
 command to run if program contains helper info
 ```
 
-## Acknowledgments
+## Future work
 
-Inspiration, code snippets, etc.
-* [awesome-readme](https://github.com/matiassingers/awesome-readme)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
+* These tools may be more useful if the user specifies the path to the student code as a command line argument, should be easy enough to implement.
+
+* Dockerhub repository is currently public, as allowing Gradescope to access a private repository requires a paid account. Options are to pay for this, or look into a free alternative such as GitLab Container Registery.
