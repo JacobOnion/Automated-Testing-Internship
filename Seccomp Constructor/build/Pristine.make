@@ -28,9 +28,9 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-TARGETDIR = build
-TARGET = $(TARGETDIR)/Submission
-INCLUDES += -ISubmission -ISubmission/glad/include
+TARGETDIR = .
+TARGET = $(TARGETDIR)/Pristine
+INCLUDES += -I../Pristine -I../Pristine/glad/include
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
@@ -45,14 +45,14 @@ define POSTBUILDCMDS
 endef
 
 ifeq ($(config),debug)
-OBJDIR = obj/Debug/Submission
+OBJDIR = obj/Debug/Pristine
 DEFINES += -DDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g
 ALL_LDFLAGS += $(LDFLAGS)
 
 else ifeq ($(config),release)
-OBJDIR = obj/Release/Submission
+OBJDIR = obj/Release/Pristine
 DEFINES += -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -O2
@@ -83,7 +83,7 @@ all: $(TARGET)
 
 $(TARGET): $(GENERATED) $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
 	$(PRELINKCMDS)
-	@echo Linking Submission
+	@echo Linking Pristine
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -104,7 +104,7 @@ else
 endif
 
 clean:
-	@echo Cleaning Submission
+	@echo Cleaning Pristine
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(GENERATED)
@@ -137,10 +137,10 @@ endif
 # File Rules
 # #############################################
 
-$(OBJDIR)/gl.o: Submission/glad/src/gl.c
+$(OBJDIR)/gl.o: ../Pristine/glad/src/gl.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/main.o: Submission/main.cpp
+$(OBJDIR)/main.o: ../Pristine/main.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

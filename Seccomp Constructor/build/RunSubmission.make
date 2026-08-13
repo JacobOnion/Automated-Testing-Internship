@@ -28,9 +28,9 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-TARGETDIR = build
-TARGET = $(TARGETDIR)/RunPristine
-INCLUDES += -IPristine
+TARGETDIR = .
+TARGET = $(TARGETDIR)/RunSubmission
+INCLUDES += -I../Submission
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
@@ -45,14 +45,14 @@ define POSTBUILDCMDS
 endef
 
 ifeq ($(config),debug)
-OBJDIR = obj/Debug/RunPristine
+OBJDIR = obj/Debug/RunSubmission
 DEFINES += -DDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g
 ALL_LDFLAGS += $(LDFLAGS)
 
 else ifeq ($(config),release)
-OBJDIR = obj/Release/RunPristine
+OBJDIR = obj/Release/RunSubmission
 DEFINES += -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -O2
@@ -70,8 +70,8 @@ endif
 GENERATED :=
 OBJECTS :=
 
-GENERATED += $(OBJDIR)/run_pristine.o
-OBJECTS += $(OBJDIR)/run_pristine.o
+GENERATED += $(OBJDIR)/run_submission.o
+OBJECTS += $(OBJDIR)/run_submission.o
 
 # Rules
 # #############################################
@@ -81,7 +81,7 @@ all: $(TARGET)
 
 $(TARGET): $(GENERATED) $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
 	$(PRELINKCMDS)
-	@echo Linking RunPristine
+	@echo Linking RunSubmission
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -102,7 +102,7 @@ else
 endif
 
 clean:
-	@echo Cleaning RunPristine
+	@echo Cleaning RunSubmission
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(GENERATED)
@@ -135,7 +135,7 @@ endif
 # File Rules
 # #############################################
 
-$(OBJDIR)/run_pristine.o: run_pristine.c
+$(OBJDIR)/run_submission.o: ../run_submission.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

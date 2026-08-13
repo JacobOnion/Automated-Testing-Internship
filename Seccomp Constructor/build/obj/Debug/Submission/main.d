@@ -1,5 +1,6 @@
-obj/Debug/Prestine/main.o: OpenGL/main.cpp /usr/include/stdc-predef.h \
- OpenGL/glad/include/glad/gl.h OpenGL/glad/include/KHR/khrplatform.h \
+obj/Debug/Submission/main.o: ../Submission/main.cpp \
+ /usr/include/stdc-predef.h ../Submission/glad/include/glad/gl.h \
+ ../Submission/glad/include/KHR/khrplatform.h \
  /usr/lib/gcc/x86_64-redhat-linux/11/include/stdint.h \
  /usr/include/stdint.h /usr/include/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -142,9 +143,9 @@ obj/Debug/Prestine/main.o: OpenGL/main.cpp /usr/include/stdc-predef.h \
  /usr/include/bits/socket_type.h /usr/include/bits/sockaddr.h \
  /usr/include/asm/socket.h /usr/include/asm-generic/socket.h \
  /usr/include/asm/sockios.h /usr/include/asm-generic/sockios.h \
- /usr/include/bits/types/struct_osockaddr.h OpenGL/stb_image_write.h \
- /usr/include/c++/11/stdlib.h /usr/include/string.h \
- /usr/include/strings.h /usr/include/c++/11/math.h \
+ /usr/include/bits/types/struct_osockaddr.h \
+ ../Submission/stb_image_write.h /usr/include/c++/11/stdlib.h \
+ /usr/include/string.h /usr/include/strings.h /usr/include/c++/11/math.h \
  /usr/include/c++/11/cmath /usr/include/math.h \
  /usr/include/bits/math-vector.h /usr/include/bits/libm-simd-decl-stubs.h \
  /usr/include/bits/flt-eval-method.h /usr/include/bits/fp-logb.h \
@@ -165,8 +166,8 @@ obj/Debug/Prestine/main.o: OpenGL/main.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/11/tr1/poly_laguerre.tcc \
  /usr/include/c++/11/tr1/riemann_zeta.tcc /usr/include/assert.h
 /usr/include/stdc-predef.h:
-OpenGL/glad/include/glad/gl.h:
-OpenGL/glad/include/KHR/khrplatform.h:
+../Submission/glad/include/glad/gl.h:
+../Submission/glad/include/KHR/khrplatform.h:
 /usr/lib/gcc/x86_64-redhat-linux/11/include/stdint.h:
 /usr/include/stdint.h:
 /usr/include/bits/libc-header-start.h:
@@ -380,7 +381,7 @@ OpenGL/glad/include/KHR/khrplatform.h:
 /usr/include/asm/sockios.h:
 /usr/include/asm-generic/sockios.h:
 /usr/include/bits/types/struct_osockaddr.h:
-OpenGL/stb_image_write.h:
+../Submission/stb_image_write.h:
 /usr/include/c++/11/stdlib.h:
 /usr/include/string.h:
 /usr/include/strings.h:

@@ -1,4 +1,4 @@
-obj/Debug/RunPristine/run_pristine.o: run_pristine.c \
+obj/Debug/RunSubmission/run_submission.o: ../run_submission.c \
  /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/bits/libc-header-start.h /usr/include/features.h \
  /usr/include/features-time64.h /usr/include/bits/wordsize.h \

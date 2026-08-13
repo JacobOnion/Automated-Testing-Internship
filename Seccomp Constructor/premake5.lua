@@ -1,4 +1,5 @@
 workspace "Container"
+    location "build"
     configurations { "Debug", "Release" }
 
     filter "configurations:Debug"

@@ -28,9 +28,9 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-TARGETDIR = build
+TARGETDIR = .
 TARGET = $(TARGETDIR)/libScreenGrab.so
-INCLUDES += -IPristine
+INCLUDES += -I../Pristine
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
@@ -135,7 +135,7 @@ endif
 # File Rules
 # #############################################
 
-$(OBJDIR)/ScreenGrabLib.o: Pristine/ScreenGrabLib.cpp
+$(OBJDIR)/ScreenGrabLib.o: ../Pristine/ScreenGrabLib.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

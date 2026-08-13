@@ -28,9 +28,9 @@ std::string resolve_shader_path(const std::string& filename) {
     const std::vector<std::string> candidates = {
         filename,
         "./assets/" + filename,
-        "./OpenGL/assets/" + filename,
-        "/LocalCont/source/OpenGL/assets/" + filename,
-        "/LocalCont/source/OpenGL/" + filename,
+        "./Pristine/assets/" + filename,
+        "/LocalCont/source/Pristine/assets/" + filename,
+        "/LocalCont/source/Pristine/" + filename,
     };
 
     for (const auto& candidate : candidates) {
