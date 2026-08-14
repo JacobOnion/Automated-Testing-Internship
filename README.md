@@ -90,6 +90,4 @@ For any questions about these tools, email jacobeonion@gmail.com
 
 ## Future work
 
-* These tools may be more useful if the user specifies the path to the student code as a command line argument, should be easy enough to implement.
-
 * Dockerhub repository is currently public, as allowing Gradescope to access a private repository requires a paid account. Options are to pay for this, or look into a free alternative such as GitLab Container Registery.
