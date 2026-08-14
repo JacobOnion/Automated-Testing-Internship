@@ -1,10 +1,10 @@
 # Automated Testing Projects
 
-3 tools focused on improving security when grading student code.
+Three tools focused on improving security when grading student code.
 
 ## Graphics-Autograder
 
-A low-level autograder than can be used in place of any currently used autograder in Gradescope.
+A low-level autograder than can be used in place of any currently used autograder in Gradescope. The focus of this autograder is on identifying potential security concerns in the student code before the marker runs the submission locally on their machine for futher marking.
 
 ### Dependencies
 
@@ -39,7 +39,7 @@ A tool to build a syscall whitelist based on an example valid submission, to the
 
 ### Setup and execution
 
-1. Add the example submission to the "Pristine" directory and student code to the "Submission" directory
+1. Add the example submission to the "Pristine" directory
 
 2. build the executables:
 ```
@@ -53,10 +53,15 @@ build/RunPristine
 
 This should create a file called "syscalls.txt", containing all the syscall numbers used in the pristine code.
 
-4. Run:
+4. Student code can be added to the local Submission directory, or run from any directory by specifying the path as a command line argument.
+   Run in local submission directory:
    ```
    build/RunSubmission
     ```
+   Run in specified directory:
+   ```
+   build/RunSubmission 'absolute path to submission directory'
+   ```
 
 
 ## Local Execution Container

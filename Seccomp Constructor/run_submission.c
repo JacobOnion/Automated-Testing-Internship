@@ -185,7 +185,8 @@ int remove_process(pid_t pid)
 }
 
 
-int main() {
+int main(int argc, char *argv[]) {
+
     pid_t child = fork();
     openGL_PID = child;
     if (child == 0) {
@@ -196,9 +197,15 @@ int main() {
         setup_base_filter();
         
         setup_whitelist();
-
-             int result = execl("build/Submission", "Submission", NULL);
-
+        int result;
+        if (argc == 2) {
+            printf("Running default submission directory");
+            char *submission_path = argv[1];
+            result = execv(submission_path, NULL);
+        }
+        else
+            result = execl("build/Submission", "Submission", NULL);
+        //int result = execv(submission_path, NULL);
         _exit(result);
     }
 
