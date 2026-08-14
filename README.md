@@ -54,11 +54,11 @@ build/RunPristine
 This should create a file called "syscalls.txt", containing all the syscall numbers used in the pristine code.
 
 4. Student code can be added to the local Submission directory, or run from any directory by specifying the path as a command line argument.
-   Run in local submission directory:
+   * Run in local submission directory:
    ```
    build/RunSubmission
     ```
-   Run in specified directory:
+   * Run in specified directory:
    ```
    build/RunSubmission 'absolute path to submission directory'
    ```
