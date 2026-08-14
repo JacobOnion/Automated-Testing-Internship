@@ -86,10 +86,7 @@ podman run container:latest
 
 ## Help
 
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
+For any questions about these tools, email jacobeonion@gmail.com
 
 ## Future work
 
